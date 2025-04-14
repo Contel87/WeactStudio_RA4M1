@@ -83,7 +83,8 @@ static void led_level_set(bsp_io_level_t led_level)
 {
     fsp_err_t err = FSP_SUCCESS;
     /* Set LED status */
-    err = R_IOPORT_PinWrite(&g_ioport_ctrl, BSP_IO_PORT_00_PIN_12, led_level);
+    err = R_IOPORT_PinWrite(&g_ioport_ctrl, BSP_IO_PORT_00_PIN_12, led_level); // Same to g_ioport.p_api->pinWrite(&g_ioport_ctrl, BSP_IO_PORT_00_PIN_12, led_level);
+    // Perche' nel common_data.c .p_api viene associata a g_ioport_on_ioport che richiama la funzione R_IOPORT_PinWrite
     if(FSP_SUCCESS != err)
     {
         APP_ERR_PRINT("\r\n ** R_IOPORT_PinWrite FAILED ** \r\n");
