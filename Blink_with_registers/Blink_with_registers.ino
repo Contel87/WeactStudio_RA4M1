@@ -41,10 +41,10 @@ void led_blink(){
 
 void setup() {
   //pinMode(21, OUTPUT); // Imposta P012 OUTPUT - Variante 1
-  //R_IOPORT_PinCfg(NULL, BSP_IO_PORT_00_PIN_12, IOPORT_CFG_PORT_DIRECTION_OUTPUT); // Imposta P012 OUTPUT - Variante 2
-  R_PFS->PORT[0].PIN[12].PmnPFS_b.PDR = 1; // Imposta P012 OUTPUT - Variante 3
+  R_IOPORT_PinCfg(&g_ioport_ctrl, BSP_IO_PORT_00_PIN_12, IOPORT_CFG_PORT_DIRECTION_OUTPUT); // Imposta P012 OUTPUT - Variante 2
+  //R_PFS->PORT[0].PIN[12].PmnPFS_b.PDR = 1; // Imposta P012 OUTPUT - Variante 3
   
-  /*
+  /* Alternativa in caso di pin non configurato nel bootloader Arduino
   // enable writing to the pin registers
     R_PMISC->PWPR = 0;          // Clear BOWI bit - writing to PFSWE bit enabled
     R_PMISC->PWPR = 1U << 6;    // Set PFSWE bit - writing to PFS register enabled
@@ -53,6 +53,11 @@ void setup() {
     R_PFS->PORT[0].PIN[12].PmnPFS_b.PDR = 1;  // "Output"
     R_PFS->PORT[0].PIN[12].PmnPFS_b.DSCR = 1; // "Middle Drive capability"
     R_PFS->PORT[0].PIN[12].PmnPFS_b.PMR = 0;  // "Used as a general I/O pin"
+    */
+    
+    /* Alternativa di configurazione rapida
+    uint32_t pcfg = IOPORT_CFG_PORT_DIRECTION_OUTPUT;
+    R_IOPORT_PinCfg(NULL, io_pin, pcfg);
     */
 }
 
